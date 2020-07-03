@@ -1,10 +1,9 @@
 import createMixin from './mixin'
+import GingerHTMLHead from './head'
 
 export default function({capabilities, options}){
-  console.group('GingerHeadPlugin');
-  console.log('Plugin capabilities', capabilities);
-  console.log('Plugin options', options);
-  console.groupEnd('GingerHeadPlugin');
+
+  capabilities.vue.prototype.$head = new GingerHTMLHead(options);
 
   return {
     mixin: createMixin

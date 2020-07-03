@@ -1,6 +1,6 @@
-import  { isObject } from './index'
+import { isObject, rootConfigKey } from './index'
 
-export default function hasHeadInfo(vm){
+export function hasHeadInfo(vm){
   vm = vm || this;
   return vm && (vm[rootConfigKey] === true || isObject(vm[rootConfigKey]));
 }

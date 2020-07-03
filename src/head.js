@@ -1,9 +1,28 @@
+import { getComponentOption, isFunction } from "./utils";
+
 export default class GingerHTMLHead{
   
-  constructor(){
+  constructor(options){
     this.current = null;
     this.entries = [];
     this.updater = null;
+
+    this.options = options;
+  }
+
+  refresh(vm){
+    const info = getComponentOption(vm);
+
+    
+    Object.keys(info).forEach( key => {
+      let value = info[key];
+
+      if (isFunction(value)){
+        value = value.apply(value);
+      }
+      console.log('refresh', key, value);
+    })
+    
   }
 
   /**
