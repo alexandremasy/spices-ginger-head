@@ -1,5 +1,3 @@
-import { getComponentOption, isFunction } from "./utils";
-
 export default class GingerHTMLHead{
   
   constructor(options){
@@ -8,21 +6,6 @@ export default class GingerHTMLHead{
     this.updater = null;
 
     this.options = options;
-  }
-
-  refresh(vm){
-    const info = getComponentOption(vm);
-
-    
-    Object.keys(info).forEach( key => {
-      let value = info[key];
-
-      if (isFunction(value)){
-        value = value.apply(value);
-      }
-      console.log('refresh', key, value);
-    })
-    
   }
 
   /**
@@ -49,7 +32,7 @@ export default class GingerHTMLHead{
           clearInterval(this.updater);
           this.update();
         }
-      }, 300);
+      }, 100);
     }
   }
 
@@ -58,8 +41,9 @@ export default class GingerHTMLHead{
    */
   update(){
     this.entries = this.current.matched.filter( m => m.components.default.hasOwnProperty('head') );
-    console.log('entries', this.entries);
-    this.entries = this.entries.map( m => m.components.default.head );
+    this.entries = this.entries.map( m => { 
+      return { head: m.components.default.head, instance: m.instances.default }
+    });
 
     this.entries.forEach( e => {
       console.log('e', e);
@@ -73,13 +57,14 @@ export default class GingerHTMLHead{
    */
   updateTitle(){  
     let title = this.entries.map( e => { 
+      const { head, instance } = e;
       let ret = null;
-      if (e.hasOwnProperty('title')){
-        let prop = e.title;
+      if (head.hasOwnProperty('title')){
+        let prop = head.title;
 
-        ret = e.title
+        ret = head.title
         if (typeof prop === 'function'){
-          ret = prop.call(prop);
+          ret = head.title.apply(instance);
         }
       }
       return ret;
@@ -87,7 +72,6 @@ export default class GingerHTMLHead{
 
     title = title.join(' - ');
     if (title && title.length > 0){
-      console.log('updateTitle', title);
       document.title = title;
     }
 

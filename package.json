@@ -37,8 +37,5 @@
     "bundle": "webpack --mode=production",
     "start": "nodemon --exec \"yarn bundle\""
   },
-  "version": "1.0.0",
-  "dependencies": {
-    "deepmerge": "^4.2.2"
-  }
+  "version": "1.0.0"
 }
