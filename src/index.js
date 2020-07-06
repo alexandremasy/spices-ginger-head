@@ -7,6 +7,10 @@ export default function({capabilities, options}){
   capabilities.router.beforeEach((to, from, next) => {
     head.setCurrentRoute(to);
     next();
+  });
+
+  capabilities.eventbus.$on('ginger:head:update', () => {
+    head.update();
   })
 
   return {}
