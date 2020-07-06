@@ -45,10 +45,6 @@ export default class GingerHTMLHead{
       return { head: m.components.default.head, instance: m.instances.default }
     });
 
-    this.entries.forEach( e => {
-      console.log('e', e);
-    })
-
     this.updateTitle();
   }
 
