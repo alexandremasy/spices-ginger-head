@@ -28,3 +28,7 @@ app.use(VueGinger, {
 
 ## Configuration
 
+## Declare head from the view
+
+## Trigger an update from a view
+
