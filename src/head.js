@@ -2,7 +2,7 @@ export default class GingerHTMLHead{
   
   constructor(options){
     this.current = null;
-    this.entries = [];
+    this.entry = null;
     this.updater = null;
 
     this.options = options;
@@ -14,25 +14,9 @@ export default class GingerHTMLHead{
    * @param {Object} route 
    */
   setCurrentRoute(route){
-    if (route.matched && route.matched.length > 0) {
-      if (this.updater){
-        clearInterval(this.updater);
-      }
-
+    if (route && this.current !== route){
       this.current = route;
-      
-      this.updater = setInterval( () => {
-        let ready = false;
-
-        this.current.matched.forEach( m => {
-          ready = ready || (m.components && m.components.hasOwnProperty('default'))
-        });
-        
-        if (ready){
-          clearInterval(this.updater);
-          this.update();
-        }
-      }, 100);
+      this.update();
     }
   }
 
@@ -40,11 +24,11 @@ export default class GingerHTMLHead{
    * Orchestrate the header update based on the component head
    */
   update(){
-    this.entries = this.current.matched.filter( m => m.components.default.hasOwnProperty('head') );
-    this.entries = this.entries.map( m => { 
-      return { head: m.components.default.head, instance: m.instances.default }
-    });
-
+    this.entry = {
+      head: this.current.components.default.head,
+      instance: this.current.instances.default
+    };
+    
     this.updateTitle();
   }
 
@@ -52,25 +36,20 @@ export default class GingerHTMLHead{
    * Set the document title based on the active routes
    */
   updateTitle(){  
-    let title = this.entries.map( e => { 
-      const { head, instance } = e;
-      let ret = null;
-      if (head.hasOwnProperty('title')){
-        let prop = head.title;
+    let title = '';
+    const { head, instance } = this.entry;
 
-        ret = head.title
-        if (typeof prop === 'function'){
-          ret = head.title.apply(instance);
-        }
+    if (head.hasOwnProperty('title')){
+      let prop = head.title;
+
+      title = head.title
+      if (typeof prop === 'function'){
+        title = head.title.apply(instance);
       }
-      return ret;
-    });
+    }
 
-    title = title.join(' - ');
     if (title && title.length > 0){
       document.title = title;
     }
-
   }
-
 }
