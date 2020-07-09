@@ -2,17 +2,22 @@
   "author": "Alexandre Masy <hello@alexandremasy.com",
   "description": "Customize the head from the GingerView instance",
   "devDependencies": {
-    "chokidar": "^3.3.1",
-    "node-notifier": "^7.0.0",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "rollup": "^2.21.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "files": [
     "dist/*.js"
   ],
-  "keywords": [],
-  "license": "UNLICENSED",
+  "keywords": [
+    "spices",
+    "ginger",
+    "ginger:plugin",
+    "head"
+  ],
+  "license": "MIT",
   "main": "dist/spices-ginger-head.min.js",
+  "module": "dist/spices-ginger-head.esm.min.js",
   "name": "@ginger/head",
   "nodemonConfig": {
     "ignore": [
@@ -33,8 +38,8 @@
     "url": "git+ssh://git@bitbucket.org/infinity-mobile/ginger-head.git"
   },
   "scripts": {
-    "analyse": "webpack --json > stats.json",
-    "bundle": "webpack --mode=production",
+    "bundle": "rollup -c",
+    "prepublish": "yarn bundle",
     "start": "nodemon --exec \"yarn bundle\""
   },
   "version": "1.0.0"
