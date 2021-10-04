@@ -9,13 +9,13 @@ e.g. Change the title of the document based on dynamically loaded data
 1. Install the plugin
 
 ```
-yarn add @ginger/head
+yarn add @spices/ginger-head
 ```
 
 2. Declare the plugin
 
 ```
-import { GingerHeadPlugin } from '@ginger/head'
+import { GingerHeadPlugin } from '@spices/ginger-head'
 
 let opts = {
   key: 'ABC'

@@ -18,7 +18,7 @@
   "license": "MIT",
   "main": "dist/spices-ginger-head.min.js",
   "module": "dist/spices-ginger-head.esm.min.js",
-  "name": "@ginger/head",
+  "name": "@spices/ginger-head",
   "nodemonConfig": {
     "ignore": [
       ".git",
@@ -28,14 +28,6 @@
       "src"
     ],
     "ext": "js"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.infinity-commerce.io/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/infinity-mobile/ginger-head.git"
   },
   "scripts": {
     "bundle": "rollup -c",
